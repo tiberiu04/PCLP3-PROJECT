@@ -54,7 +54,6 @@ plt.tight_layout()
 plt.show()
 
 #TASK 4
-
 missing_data = df.isnull().sum()
 missing_columns = missing_data[missing_data > 0]
 missing_proportions = (missing_columns / len(df)) * 100
@@ -63,3 +62,32 @@ print(missing_proportions)
 missing_by_survival = df.groupby('Survived').apply(lambda x: x.isnull().sum() / len(x) * 100)
 print("\nThe procent for every missing value:")
 print(missing_by_survival[missing_columns.index])
+
+#TASK 5
+
+bins = [0, 20, 40, 60, np.inf]
+labels = [0, 1, 2, 3]
+df['AgeCategory'] = pd.cut(df['Age'], bins=bins, labels=labels, right=False)
+age_category_counts = df['AgeCategory'].value_counts().sort_index()
+plt.figure(figsize=(10, 6))
+age_category_counts.plot(kind='bar', color='teal')
+plt.title('Number of Passengers by Age Category')
+plt.xlabel('Age Category')
+plt.ylabel('Number of Passengers')
+plt.xticks(ticks=np.arange(len(labels)), labels=['0-20', '21-40', '41-60', '61+'], rotation=0)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+
+#TASK 6
+
+male_survival = df[(df['Sex'] == 'male') & (df['Survived'] == 1)]['AgeCategory'].value_counts().sort_index()
+total_males = df[df['Sex'] == 'male']['AgeCategory'].value_counts().sort_index()
+male_survival_rate = (male_survival / total_males) * 100
+plt.figure(figsize=(10, 6))
+male_survival_rate.plot(kind='bar', color='orange')
+plt.title('Survival Rate of Males by Age Category')
+plt.xlabel('Age Category')
+plt.ylabel('Survival Rate (%)')
+plt.xticks(ticks=np.arange(len(labels)), labels=['0-20', '21-40', '41-60', '61+'], rotation=0)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
