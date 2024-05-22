@@ -91,3 +91,71 @@ plt.ylabel('Survival Rate (%)')
 plt.xticks(ticks=np.arange(len(labels)), labels=['0-20', '21-40', '41-60', '61+'], rotation=0)
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
+
+#TASK 7
+
+total_passengers = len(df)
+num_children = (df['Age'] < 18).sum()
+percent_children = (num_children / total_passengers) * 100
+children_survival_rate = df[df['Age'] < 18]['Survived'].mean() * 100
+adults_survival_rate = df[df['Age'] >= 18]['Survived'].mean() * 100
+plt.figure(figsize=(8, 5))
+plt.bar(['Children', 'Adults'], [children_survival_rate, adults_survival_rate], color=['blue', 'green'])
+plt.title('Survival Rate by Age Group')
+plt.ylabel('Survival Rate (%)')
+plt.ylim(0, 100)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+print(f"The percent of children: {percent_children:.2f}%")
+
+#TASK 8
+
+mean_age_survived = df[df['Survived'] == 1]['Age'].mean()
+mean_age_not_survived = df[df['Survived'] == 0]['Age'].mean()
+df.loc[(df['Age'].isnull()) & (df['Survived'] == 1), 'Age'] = mean_age_survived
+df.loc[(df['Age'].isnull()) & (df['Survived'] == 0), 'Age'] = mean_age_not_survived
+most_common_embarked = df['Embarked'].mode()[0]
+df['Embarked'].fillna(most_common_embarked, inplace=True)
+print("The number of absent values for'Age':", df['Age'].isnull().sum())
+print("The number of absent values for 'Embarked':", df['Embarked'].isnull().sum())
+df.head()
+
+#TASK 9
+df['Title'] = df['Name'].apply(lambda name: re.search(r'\b(\w+)\.', name).group(1) if re.search(r'\b(\w+)\.', name) else 'Unknown')
+def check_title_sex(row):
+    title_sex_mapping = {
+        'Mr': 'male',
+        'Miss': 'female',
+        'Mrs': 'female',
+        'Master': 'male',
+        'Don': 'male',
+        'Dona': 'female',
+        'Lady': 'female',
+        'Sir': 'male',
+        'Countess': 'female',
+        'Dr': 'neutral',
+        'Rev': 'neutral',
+        'Mme': 'female',
+        'Ms': 'female',
+        'Major': 'male',
+        'Capt': 'male',
+        'Jonkheer': 'male'
+    }
+    expected_sex = title_sex_mapping.get(row['Title'], 'neutral')
+    if expected_sex == 'neutral':
+        return True
+    return row['Sex'] == expected_sex
+df['Title_Sex_Correct'] = df.apply(check_title_sex, axis=1)
+correct = df['Title_Sex_Correct'].sum()
+incorrect = len(df) - correct
+print(f"Number of correct titles: {correct}")
+print(f"Number of incorrect titles: {incorrect}")
+title_counts = df['Title'].value_counts()
+
+plt.figure(figsize=(10, 6))
+title_counts.plot(kind='bar', color='c')
+plt.title('The distribution of titles depending on the number of people')
+plt.xlabel('Title')
+plt.ylabel('Number of people')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
