@@ -37,3 +37,29 @@ axs[1, 0].set_ylabel('Percentage')
 plt.tight_layout()
 
 plt.show()
+
+#TASK 3
+
+fig, axs = plt.subplots(2, 3, figsize=(18, 10))
+numeric_columns = ['Age', 'Fare', 'Pclass', 'SibSp', 'Parch']
+for i, col in enumerate(numeric_columns):
+    ax = axs[i//3, i%3]
+    df[col].hist(ax=ax, bins=10, color='skyblue', edgecolor='black')
+    ax.set_title('Histogram for {col}')
+    ax.set_xlabel(col)
+    ax.set_ylabel('Frequency')
+axs[1, 2].axis('off')
+
+plt.tight_layout()
+plt.show()
+
+#TASK 4
+
+missing_data = df.isnull().sum()
+missing_columns = missing_data[missing_data > 0]
+missing_proportions = (missing_columns / len(df)) * 100
+print("Coloumns with missing values:")
+print(missing_proportions)
+missing_by_survival = df.groupby('Survived').apply(lambda x: x.isnull().sum() / len(x) * 100)
+print("\nThe procent for every missing value:")
+print(missing_by_survival[missing_columns.index])
