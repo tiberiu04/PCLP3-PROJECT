@@ -54,6 +54,7 @@ plt.tight_layout()
 plt.show()
 
 #TASK 4
+
 missing_data = df.isnull().sum()
 missing_columns = missing_data[missing_data > 0]
 missing_proportions = (missing_columns / len(df)) * 100
@@ -121,6 +122,7 @@ print("The number of absent values for 'Embarked':", df['Embarked'].isnull().sum
 df.head()
 
 #TASK 9
+
 df['Title'] = df['Name'].apply(lambda name: re.search(r'\b(\w+)\.', name).group(1) if re.search(r'\b(\w+)\.', name) else 'Unknown')
 def check_title_sex(row):
     title_sex_mapping = {
@@ -158,4 +160,23 @@ plt.title('The distribution of titles depending on the number of people')
 plt.xlabel('Title')
 plt.ylabel('Number of people')
 plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+
+#Task 10
+
+df['Alone'] = ((df['SibSp'] == 0) & (df['Parch'] == 0)).astype(int)
+plt.figure(figsize=(8, 5))
+sns.histplot(data=df, x='Alone', hue='Survived', multiple='stack', discrete=True, palette='pastel')
+plt.title('Survival Based on Being Alone on Titanic')
+plt.xlabel('Alone (1 = Yes, 0 = No)')
+plt.ylabel('Count')
+plt.xticks([0, 1], ['Not Alone', 'Alone'])
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+plt.figure(figsize=(10, 5))
+sns.stripplot(data=df.head(100), x='Pclass', y='Fare', hue='Survived', jitter=True, dodge=True, palette='pastel')
+plt.title('Fare vs. Class vs. Survival for the First 100 Records')
+plt.xlabel('Passenger Class')
+plt.ylabel('Fare')
+plt.grid(True)
 plt.show()
