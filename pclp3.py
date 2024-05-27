@@ -77,14 +77,14 @@ missing_columns = missing_data[missing_data > 0]
 missing_proportions = (missing_columns / len(df)) * 100
 
 # Afisez coloanele cu valori lipsa si proportiile acestora
-print("Coloane cu valori lipsa:")
+print("Coloumns with no components:")
 print(missing_proportions)
 
 # Calculez procentul de valori lipsa pentru fiecare coloana, grupat dupa supravietuire
 missing_by_survival = df.groupby('Survived').apply(lambda x: x.isnull().sum() / len(x) * 100)
 
 # Afisez procentul de valori lipsa pentru coloanele selectate, grupat dupa supravietuire
-print("\nProcentul de valori lipsa pentru fiecare coloana:")
+print("\nThe percent of null columns:")
 print(missing_by_survival[missing_columns.index])
 
 
@@ -113,7 +113,9 @@ plt.show()
 
 # Calculez numarul de barbati supravietuitori pe categorii de varsta
 male_survival = df[(df['Sex'] == 'male') & (df['Survived'] == 1)]['AgeCategory'].value_counts().sort_index()
+# Calculez numarul total de barbati pe categorii de varsta
 total_males = df[df['Sex'] == 'male']['AgeCategory'].value_counts().sort_index()
+# Calculez rata de supravietuire a barbatilor pe categorii de varsta
 male_survival_rate = (male_survival / total_males) * 100
 # Creez o figura pentru a vizualiza rata de supravietuire a barbatilor pe categorii de varsta
 plt.figure(figsize=(10, 6))
