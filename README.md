@@ -1,15 +1,25 @@
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
-![alt text](image-7.png)
-![alt text](image-8.png)
-![alt text](image-9.png)
-![alt text](image-10.png)
-![alt text](image-11.png)
+# Gutanu Tiberiu-Mihnea CA 311
+
+### TASK1 :
+![alt text](image-12.png)
+### TASK2 :
+![alt text](image-21.png)
+### TASK3 :
+![alt text](image-13.png)
+![alt text](image-14.png)
+### TASK4 :
+![alt text](image-15.png)
+### TASK5 :
+![alt text](image-22.png)
+### TASK6 :
+![alt text](image-19.png)
+### TASK7 :
+![alt text](image-20.png)
+### TASK9 :
+![alt text](image-16.png)
+### TASK10 :
+![alt text](image-25.png)
+![alt text](image-23.png)
 
 # TASK 1
 Incarca setul de date, afiseaza tipurile de date pentru fiecare coloana,
@@ -48,7 +58,7 @@ lipsa pentru coloana 'Embarked' cu cea mai comuna valoare. Verifica
 modificarile.
 
 # TASK 9
-Extrage titlurile (Mr., Miss., etc.) din numele pasagerilor, verifica daca
+Extrage titlurile (Mr, Miss, etc.) din numele pasagerilor, verifica daca
 titlurile corespund cu genul pasagerilor si ploteaza distributia titlurilor
 in functie de numarul de persoane.
 

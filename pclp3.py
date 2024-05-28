@@ -90,21 +90,22 @@ print(missing_by_survival[missing_columns.index])
 
 # TASK 5
 
-# Creez categoriile de varsta
+# Creez categoriile de vartsa
 bins = [0, 20, 40, 60, np.inf]
 labels = [0, 1, 2, 3]
+# Creez o noua coloana 'AgeCategory' care contine categoriile de varsta
 df['AgeCategory'] = pd.cut(df['Age'], bins=bins, labels=labels, right=False)
-
 # Calculez numarul de pasageri pe categorii de varsta
 age_category_counts = df['AgeCategory'].value_counts().sort_index()
-
-# Creez graficul pentru numarul de pasageri pe categorii de varsta
 plt.figure(figsize=(10, 6))
+# Desenez un grafic de bare pentru numarul de pasageri pe categorii de varsta
 age_category_counts.plot(kind='bar', color='teal')
 plt.title('Number of Passengers by Age Category')
 plt.xlabel('Age Category')
 plt.ylabel('Number of Passengers')
+# Setez etichetele pentru axa x
 plt.xticks(ticks=np.arange(len(labels)), labels=['0-20', '21-40', '41-60', '61+'], rotation=0)
+# Adaug un grid pe axa y pentru o vizualizare mai clara
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
 
@@ -226,27 +227,26 @@ plt.show()
 
 # TASK 10
 
+# Creez o noua coloana 'FamilySize' care contine numarul total de membri ai familiei
 df['Alone'] = ((df['SibSp'] == 0) & (df['Parch'] == 0)).astype(int)
 plt.figure(figsize=(8, 5))
-# Desenez o histograma pentru coloana 'Alone', colorata dupa 'Survived'
+# Desenez un grafic de bare pentru numarul de pasageri singuri si insotiti
 sns.histplot(data=df, x='Alone', hue='Survived', multiple='stack', discrete=True, palette='pastel')
 plt.title('Survival Based on Being Alone on Titanic')
-# Adaug titlul pentru axa x
+# Adaug titlul pentru axa x si y
 plt.xlabel('Alone (1 = Yes, 0 = No)')
 plt.ylabel('Count')
-# Setez etichetele axei x
 plt.xticks([0, 1], ['Not Alone', 'Alone'])
+# Adaug o grila pe axa y pentru o vizualizare mai clara
 plt.grid(axis='y', linestyle='--', alpha=0.7)
-# Afisez histograma
 plt.show()
+
 plt.figure(figsize=(10, 5))
-# Desenez un strip plot pentru primele 100 de inregistrari din DataFrame-ul 'df'
-# Adaug dispersia punctelor (jitter=True) si separarea pe categorii (dodge=True)
+# Desenez un grafic de tip stripplot pentru a vizualiza distributia tarifelor in functie de clasa si supravietuire
 sns.stripplot(data=df.head(100), x='Pclass', y='Fare', hue='Survived', jitter=True, dodge=True, palette='pastel')
 plt.title('Fare vs. Class vs. Survival for the First 100 Records')
 plt.xlabel('Passenger Class')
-# Adaug eticheta pentru axa y
 plt.ylabel('Fare')
+# Adaug o grila pentru o vizualizare mai clara
 plt.grid(True)
 plt.show()
-
